@@ -27,6 +27,7 @@ tech_challenge_api/
 ├── render.yaml
 └── README.md
 
+
 ## Testar localmente
 ```bash
 pip install -r requirements.txt
