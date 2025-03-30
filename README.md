@@ -17,15 +17,7 @@ Site: http://vitibrasil.cnpuv.embrapa.br/index.php?opcao=opt_01
 
 ## Estrutura:
 
-tech_challenge_api/
-├── app/
-│   ├── __init__.py
-│   ├── routes.py
-│   └── embrapa_scraper.py
-├── run.py
-├── requirements.txt
-├── render.yaml
-└── README.md
+tech_challenge_api/ ├── app/ │ ├── init.py │ ├── routes.py │ └── embrapa_scraper.py ├── run.py ├── requirements.txt ├── render.yaml └── README.md
 
 
 ## Testar localmente
