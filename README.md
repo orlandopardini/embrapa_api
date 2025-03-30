@@ -27,7 +27,7 @@ tech_challenge_api/
 ├── requirements.txt
 ├── render.yaml
 └── README.md
-
+```
 
 ## Testar localmente
 ```bash
