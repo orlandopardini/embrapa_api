@@ -16,15 +16,16 @@ Site: http://vitibrasil.cnpuv.embrapa.br/index.php?opcao=opt_01
 > As rotas de processamento, importação e exportação **exigem** o parâmetro `subtipo`.
 
 ## Estrutura:
+
 tech_challenge_api/
 ├── app/
-│   ├── __init__.py              # Inicializa o app Flask
-│   ├── routes.py                # Todas as rotas e documentação Swagger
-│   └── embrapa_scraper.py       # Lógica de scraping e leitura dos CSVs
-├── run.py                       # Arquivo principal para rodar o Flask
-├── requirements.txt             # Dependências do projeto
-├── render.yaml                  # Script de deploy automático no Render
-└── README.md                    # Documentação do projeto
+│   ├── __init__.py
+│   ├── routes.py
+│   └── embrapa_scraper.py
+├── run.py
+├── requirements.txt
+├── render.yaml
+└── README.md
 
 ## Testar localmente
 ```bash
