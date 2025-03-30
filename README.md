@@ -8,6 +8,7 @@ Site: http://vitibrasil.cnpuv.embrapa.br/index.php?opcao=opt_01
 (não possuem subtipos):
 - `/producao`
 - `/comercializacao`
+  
 (possuem subtipos):
 - `/processamento?subtipo=viniferas`
 - `/importacao?subtipo=vinhos`
