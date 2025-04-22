@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ tipo|capitalize }}{% if subtipo %} - {{ subtipo|capitalize }}{% endif %}{% if ano %} ({{ ano }}){% endif %}</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>  
+  <canvas id="bg"></canvas>
+  <div style="text-align: center; margin-top: 10px;">
+    <h1 style="font-size: 2.5em; color: white;">TECH CHALLENGE 1</h1>
+    </div>
+  <div class="container">
+    <h1>{{ tipo|capitalize }}{% if subtipo %} - {{ subtipo|capitalize }}{% endif %}{% if ano %} ({{ ano }}){% endif %}</h1>
+
+    <form id="filtroForm" method="get">
+      <label for="tipo">Selecionar categoria:</label>
+      <select id="tipo" name="tipo" onchange="atualizarSubtipos()">
+        {% for opt in ['producao', 'comercializacao', 'processamento', 'importacao', 'exportacao'] %}
+          <option value="{{ opt }}" {% if opt == tipo %}selected{% endif %}>{{ opt.capitalize() }}</option>
+        {% endfor %}
+      </select>
+
+      <label for="subtipo">Selecionar subtipo:</label>
+      <select id="subtipo" name="subtipo"></select>
+
+      <label for="ano">Filtrar por ano:</label>
+      <input type="text" id="ano" name="ano" placeholder="Ex: 2020" value="{{ ano or '' }}">
+
+      <button type="submit">Filtrar</button>
+    </form>
+
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+    <div style="color: #e91e63; font-weight: bold; font-size: 18px;">
+        Grupo 66:   Orlando Pardini Gardezani   &   Marcos Paulo Amaro
+    </div>
+    <img src="{{ url_for('static', filename='imagens/FIAP_logo.png') }}" alt="Logo FIAP" style="height: 80px; margin-right: 10px;">
+    </div>
+      
+
+    {% if dados is mapping and 'erro' in dados %}
+      <div class="erro">
+        <strong>erro</strong>
+        <p>{{ dados['erro'] }}</p>
+        <p>tipos_disponiveis: {{ dados['tipos_disponiveis'] }}</p>
+        <p>subtipos_disponiveis: {{ dados['subtipos_disponiveis'] }}</p>
+      </div>
+    {% elif dados %}
+    <table style="table-layout: auto; width: 100%;">
+        <thead>
+          <tr>
+            {% for key in dados[0].keys() %}
+              <th>{{ key }}</th>
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for linha in dados %}
+            <tr>
+              {% for key, valor in linha.items() %}
+                <td>
+                  {% if valor is number and valor > 1000 and key != 'Ano' %}
+                    {{ "{:,.0f}".format(valor).replace(",", ".") }}
+                  {% else %}
+                    {{ valor }}
+                  {% endif %}
+                </td>
+              {% endfor %}
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>Nenhum dado encontrado.</p>
+    {% endif %}
+    <div class="logo-container">
+      <img src="/static/imagens/FIAP_logo.png" alt="FIAP Logo" class="fiap-logo">
+    </div>
+  </div>
+
+  <script src="/static/malha.js"></script>
+  <script>
+    const subtiposDisponiveis = {
+      processamento: ['viniferas', 'americanas', 'mesa', 'semclass'],
+      importacao: ['vinhos', 'espumantes', 'frescas', 'passas', 'suco'],
+      exportacao: ['vinho', 'espumantes', 'uva', 'suco']
+    };
+
+    function atualizarSubtipos() {
+      const tipo = document.getElementById('tipo').value;
+      const subtipoSelect = document.getElementById('subtipo');
+      const subtipoAtual = '{{ subtipo }}';
+      subtipoSelect.innerHTML = '';
+
+      if (subtiposDisponiveis[tipo]) {
+        subtiposDisponiveis[tipo].forEach(st => {
+          const option = document.createElement('option');
+          option.value = st;
+          option.textContent = st.charAt(0).toUpperCase() + st.slice(1);
+          if (st === subtipoAtual) option.selected = true;
+          subtipoSelect.appendChild(option);
+        });
+        subtipoSelect.disabled = false;
+      } else {
+        const option = document.createElement('option');
+        option.value = '';
+        option.textContent = 'N/A';
+        option.selected = true;
+        subtipoSelect.appendChild(option);
+        subtipoSelect.disabled = true;
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', atualizarSubtipos);
+
+    document.getElementById('filtroForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const tipo = document.getElementById('tipo').value;
+      const subtipo = document.getElementById('subtipo')?.value || '';
+      const ano = document.getElementById('ano').value;
+
+      if (ano && isNaN(ano)) {
+        alert("Por favor, insira um ano numérico válido.");
+        return;
+      }
+
+      let url = tipo === 'producao' || tipo === 'comercializacao' ? `/${tipo}` : `/${tipo}/${subtipo}`;
+      if (ano) url += `?ano=${ano}`;
+      window.location.href = url;
+    });
+  </script>  
+</body>
+</html>
