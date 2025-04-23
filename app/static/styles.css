@@ -1,36 +1,36 @@
 /* Paleta inspirada no site da FIAP + Alura */
 body {
-  margin: 0;
-  padding: 0;
-  background-color: #0d0b18;
-  color: #fff;
-  font-family: 'Segoe UI', sans-serif;
+  margin: 0;                      /* Remove margem padrão */
+  padding: 0;                     /* Remove padding padrão */
+  background-color: #0d0b18;      /* Fundo escuro inspirado na FIAP */
+  color: #fff;                    /* Cor padrão do texto: branco */
+  font-family: 'Segoe UI', sans-serif; /* Fonte moderna e legível */
 }
 
 canvas#bg {
-  position: fixed;
+  position: fixed;               /* Fixa o canvas no fundo */
   top: 0;
   left: 0;
-  z-index: -1;
+  z-index: -1;                   /* Garante que fique atrás de todo conteúdo */
 }
 
 .container {
-  padding: 2rem;
-  max-width: 90%;
-  margin: auto;
+  padding: 2rem;                 /* Espaçamento interno do container */
+  max-width: 90%;               /* Largura máxima responsiva */
+  margin: auto;                 /* Centraliza o conteúdo */
 }
 
 h1 {
   font-size: 2rem;
   margin-bottom: 1.5rem;
   color: #ffffff;
-  word-break: break-word;
+  word-break: break-word;       /* Quebra palavras longas */
 }
 
 form {
   display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
+  flex-wrap: wrap;              /* Quebra elementos para nova linha em telas pequenas */
+  gap: 1rem;                    /* Espaçamento entre campos */
   align-items: center;
   margin-bottom: 2rem;
 }
@@ -51,7 +51,7 @@ select {
 }
 
 button {
-  background-color: #f50057;
+  background-color: #f50057;     /* Cor rosa FIAP */
   color: white;
   padding: 0.5rem 1rem;
   border: none;
@@ -61,32 +61,32 @@ button {
 }
 
 button:hover {
-  background-color: #c51162;
+  background-color: #c51162;     /* Tom mais escuro ao passar o mouse */
 }
 
 table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: collapse;    /* Remove espaços entre bordas */
   margin-top: 1rem;
-  background-color: #161420;
-  border: 1px solid #2b2b3b;
+  background-color: #161420;    /* Fundo escuro da tabela */
+  border: 1px solid #2b2b3b;     /* Borda discreta */
   border-radius: 5px;
   overflow: hidden;
-  table-layout: auto;
+  table-layout: auto;           /* Ajusta colunas automaticamente */
 }
 
 th, td {
   padding: 0.5rem;
   text-align: left;
   border-bottom: 1px solid #2b2b3b;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: nowrap;          /* Impede quebra de linha */
+  overflow: hidden;             /* Esconde conteúdo excedente */
+  text-overflow: ellipsis;      /* Adiciona reticências em caso de corte */
 }
 
 th {
   background-color: #1f1d2b;
-  color: #f50057;
+  color: #f50057;                /* Rosa FIAP */
   font-weight: 600;
 }
 
@@ -95,10 +95,10 @@ td {
 }
 
 tr:nth-child(even) td {
-  background-color: #1a1825;
+  background-color: #1a1825;    /* Zebra alternada para linhas pares */
 }
 
-/* Largura personalizada por coluna */
+/* Largura personalizada para colunas (ex: Id, País, Ano, Quantidade, Valor) */
 th:nth-child(1), td:nth-child(1) {
   width: 40px;
   max-width: 40px;
@@ -120,6 +120,7 @@ th:nth-child(5), td:nth-child(5) {
   max-width: 90px;
 }
 
+/* Estilo para mensagens de erro */
 .erro {
   background-color: #2a002a;
   color: #f50057;
@@ -138,8 +139,9 @@ p {
   margin-top: 1rem;
 }
 
+/* Estilo do grupo de autores */
 .grupo-titulo {
-  color: #ff0066; /* mesma cor dos títulos das colunas */
+  color: #ff0066;               /* Cor igual à usada nos títulos de coluna */
   font-weight: bold;
   text-align: center;
   margin-top: 1rem;
@@ -147,13 +149,15 @@ p {
   font-size: 1.2em;
 }
 
+/* Container que centraliza o logo da FIAP */
 .logo-container {
   text-align: center;
   margin-top: 2rem;
 }
 
+/* Estilo da imagem do logo */
 .fiap-logo {
   max-width: 150px;
   height: auto;
-  opacity: 0.85;
+  opacity: 0.85;                /* Leve transparência */
 }

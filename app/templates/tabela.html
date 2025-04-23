@@ -1,19 +1,34 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
+  <!-- Define a codificação de caracteres para suportar acentos e caracteres especiais -->
   <meta charset="UTF-8">
+
+  <!-- O título da aba, dinâmico com base na categoria, subtipo e ano -->
   <title>{{ tipo|capitalize }}{% if subtipo %} - {{ subtipo|capitalize }}{% endif %}{% if ano %} ({{ ano }}){% endif %}</title>
+
+  <!-- Link para o arquivo CSS externo de estilos -->
   <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>  
+
+  <!-- Fundo animado com canvas -->
   <canvas id="bg"></canvas>
+
+  <!-- Título centralizado com o nome do desafio -->
   <div style="text-align: center; margin-top: 10px;">
     <h1 style="font-size: 2.5em; color: white;">TECH CHALLENGE 1</h1>
-    </div>
+  </div>
+
+  <!-- Container principal de conteúdo -->
   <div class="container">
+  
+    <!-- Título principal dinâmico baseado na categoria, subtipo e ano -->
     <h1>{{ tipo|capitalize }}{% if subtipo %} - {{ subtipo|capitalize }}{% endif %}{% if ano %} ({{ ano }}){% endif %}</h1>
 
+    <!-- Formulário para filtrar os dados -->
     <form id="filtroForm" method="get">
+      <!-- Seletor de categoria (tipo) -->
       <label for="tipo">Selecionar categoria:</label>
       <select id="tipo" name="tipo" onchange="atualizarSubtipos()">
         {% for opt in ['producao', 'comercializacao', 'processamento', 'importacao', 'exportacao'] %}
@@ -21,23 +36,27 @@
         {% endfor %}
       </select>
 
+      <!-- Seletor de subtipo (preenchido via JavaScript) -->
       <label for="subtipo">Selecionar subtipo:</label>
       <select id="subtipo" name="subtipo"></select>
 
+      <!-- Campo para inserção de ano -->
       <label for="ano">Filtrar por ano:</label>
       <input type="text" id="ano" name="ano" placeholder="Ex: 2020" value="{{ ano or '' }}">
 
+      <!-- Botão para aplicar o filtro -->
       <button type="submit">Filtrar</button>
     </form>
 
+    <!-- Linha com os nomes dos integrantes e o logo da FIAP alinhado à direita -->
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
-    <div style="color: #e91e63; font-weight: bold; font-size: 18px;">
-        Grupo 66:   Orlando Pardini Gardezani   &   Marcos Paulo Amaro
+      <div style="color: #e91e63; font-weight: bold; font-size: 18px;">
+        Grupo 66:    Orlando Pardini Gardezani     &     Marcos Paulo Amaro
+      </div>
+      <img src="{{ url_for('static', filename='imagens/FIAP_logo.png') }}" alt="Logo FIAP" style="height: 80px; margin-right: 10px;">
     </div>
-    <img src="{{ url_for('static', filename='imagens/FIAP_logo.png') }}" alt="Logo FIAP" style="height: 80px; margin-right: 10px;">
-    </div>
-      
 
+    <!-- Verifica se há erro nos dados retornados -->
     {% if dados is mapping and 'erro' in dados %}
       <div class="erro">
         <strong>erro</strong>
@@ -45,20 +64,25 @@
         <p>tipos_disponiveis: {{ dados['tipos_disponiveis'] }}</p>
         <p>subtipos_disponiveis: {{ dados['subtipos_disponiveis'] }}</p>
       </div>
+
+    <!-- Se dados foram carregados corretamente -->
     {% elif dados %}
-    <table style="table-layout: auto; width: 100%;">
+      <table style="table-layout: auto; width: 100%;">
         <thead>
           <tr>
+            <!-- Cabeçalhos da tabela (dinâmicos com base nas chaves dos dados) -->
             {% for key in dados[0].keys() %}
               <th>{{ key }}</th>
             {% endfor %}
           </tr>
         </thead>
         <tbody>
+          <!-- Geração das linhas da tabela -->
           {% for linha in dados %}
             <tr>
               {% for key, valor in linha.items() %}
                 <td>
+                  <!-- Formata valores numéricos grandes com separador de milhar -->
                   {% if valor is number and valor > 1000 and key != 'Ano' %}
                     {{ "{:,.0f}".format(valor).replace(",", ".") }}
                   {% else %}
@@ -71,14 +95,20 @@
         </tbody>
       </table>
     {% else %}
+      <!-- Caso nenhum dado seja encontrado -->
       <p>Nenhum dado encontrado.</p>
     {% endif %}
+
+    <!-- Logo da FIAP no rodapé da página -->
     <div class="logo-container">
       <img src="/static/imagens/FIAP_logo.png" alt="FIAP Logo" class="fiap-logo">
     </div>
   </div>
 
+  <!-- Script de fundo animado -->
   <script src="/static/malha.js"></script>
+
+  <!-- Script JS responsável por atualizar os subtipos com base na categoria -->
   <script>
     const subtiposDisponiveis = {
       processamento: ['viniferas', 'americanas', 'mesa', 'semclass'],
@@ -86,6 +116,7 @@
       exportacao: ['vinho', 'espumantes', 'uva', 'suco']
     };
 
+    // Preenche o seletor de subtipo dinamicamente conforme a categoria selecionada
     function atualizarSubtipos() {
       const tipo = document.getElementById('tipo').value;
       const subtipoSelect = document.getElementById('subtipo');
@@ -111,19 +142,23 @@
       }
     }
 
+    // Atualiza os subtipos quando a página for carregada
     document.addEventListener('DOMContentLoaded', atualizarSubtipos);
 
+    // Evento para interceptar o envio do formulário e redirecionar com filtros aplicados
     document.getElementById('filtroForm').addEventListener('submit', function(event) {
       event.preventDefault();
       const tipo = document.getElementById('tipo').value;
       const subtipo = document.getElementById('subtipo')?.value || '';
       const ano = document.getElementById('ano').value;
 
+      // Validação simples para garantir que o ano seja numérico
       if (ano && isNaN(ano)) {
         alert("Por favor, insira um ano numérico válido.");
         return;
       }
 
+      // Construção da URL de redirecionamento com base nos filtros
       let url = tipo === 'producao' || tipo === 'comercializacao' ? `/${tipo}` : `/${tipo}/${subtipo}`;
       if (ano) url += `?ano=${ano}`;
       window.location.href = url;
