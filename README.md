@@ -16,6 +16,9 @@ API: https://embrapa-api-alq8.onrender.com/
 - `**Importacao** possui os subtipos: [vinhos, espumantes, frescas, passas e suco]            Exemplo:  /importacao/vinhos`
 - `**Exportacao** possui os subtipos: [vinho, espumantes, uva e suco]                         Exemplo:  /exportacao/suco`
 
+(documentação - SWAGGER):
+- `/apidocs`
+
 > As rotas de processamento, importação e exportação **exigem** o parâmetro `subtipo`.
 
 ## Estrutura:
